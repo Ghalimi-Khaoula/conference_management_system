@@ -9,7 +9,9 @@ export default function AuthLayout({ children }) {
     const router = useRouter();
 
     useEffect(() => {
-        
+        if (token) {
+            router.push("/dashboard");
+        }
     }, [token, router]);
 
     if (token) return null;
