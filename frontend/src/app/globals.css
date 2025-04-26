@@ -1,21 +1,29 @@
 @import "tailwindcss";
 
 :root {
+  /* Light Mode Colors */
   --color-background: white;
-  --color-foreground: #1f2937; /* gray-800 */
+  --color-foreground: oklch(27.8% .033 256.848); /* gray-800 */
+  --color-muted: #6b7280; /* gray-500 */
+  --color-primary: #6d28d9; /* violet-700 */
+  --color-primary-hover: #7c3aed; /* violet-600 */
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-background: #1f2937; /* gray-800 */
+    /* Dark Mode Colors */
+    --color-background: oklch(27.8% .033 256.848); /* gray-800 */
     --color-foreground: white;
+    --color-muted: #d1d5db; /* gray-300 */
+    --color-primary: #a78bfa; /* violet-400 */
+    --color-primary-hover: #c4b5fd; /* violet-300 */
   }
 }
 
+/* General Background and Text */
 body, html {
   background-color: var(--color-background);
-  color: var(--color-foreground);
-  /* overflow: hidden; */
+  color: var(--color-muted);
 }
 
 .all-unset {
