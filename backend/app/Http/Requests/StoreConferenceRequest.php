@@ -46,7 +46,7 @@ class StoreConferenceRequest extends FormRequest
 
             'organizer_name' => 'required|string|max:255',
             'organizer_web_page' => 'nullable|url|max:255',
-            'contact_phone' => 'required|string|max:20',
+            'contact_phone' => ['nullable', 'phone:INTERNATIONAL', 'max:20'],
 
             // 'requester_role' => removed
 

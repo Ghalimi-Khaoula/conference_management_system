@@ -16,8 +16,8 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/add-conference', [ConferenceController::class, 'store']);
+    Route::get('/my-conferences', [ConferenceController::class, 'userConferences']);
 });
 
 
-
-Route::get('/conferences/{id}', [ConferenceController::class, 'show']);
+Route::get('/conference/{slug}', [ConferenceController::class, 'showBySlug']);

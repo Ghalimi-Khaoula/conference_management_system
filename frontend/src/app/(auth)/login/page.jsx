@@ -3,9 +3,10 @@
 import { useState } from "react";
 import { Mail, KeyRound, BookOpen, CircleAlert } from "lucide-react";
 import Link from "next/link";
-import { useAuthContext } from "@/contexts/AuthContext"; // ← like in register
+import { useAuthContext } from "@/contexts/AuthContext";
 import { axiosClient, rawAxios } from "@/utils/axios-client";
 import { z } from "zod";
+import { ImageInput } from "@/components/Inputs"; // <-- ✅ Import your inputs
 
 const schema = z.object({
     email: z.string().trim().min(1, "Veuillez remplir votre e-mail.").email("Format de l’e‑mail invalide."),
@@ -66,7 +67,6 @@ export default function LoginPage() {
 
     return (
         <div className="w-full h-screen flex flex-wrap-reverse lg:flex-nowrap">
-
             <div className="w-full h-4/6 lg:w-3/5 lg:h-full flex p-3 justify-center items-center overflow-auto">
                 <div className="w-full md:w-4/5 lg:w-4/5 h-full flex flex-col gap-15 pt-21">
 
@@ -84,65 +84,41 @@ export default function LoginPage() {
                     )}
 
                     <form className="flex flex-col w-full h-auto gap-4" onSubmit={handleSubmit}>
-                        
-                        {/* Email */}
+
+                        {/* ─────── email ─────── */}
                         <div className="w-full">
-                            <label htmlFor="email" className="block mb-2 text-sm font-medium text-violet-600 dark:text-violet-400">
-                                Adresse e‑mail
-                            </label>
-                            <div className="relative mb-6">
-                                <div className="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
-                                    <Mail className="w-4 h-4 text-gray-500 dark:text-gray-400" />
-                                </div>
-                                <input
-                                    type="email"
-                                    id="email"
-                                    className={`outline-none bg-gray-50 border-2 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-violet-500 dark:focus:border-violet-500 ${
-                                        fieldErrors.email ? "dark:!border-red-400 !border-red-600" : ""
-                                    }`}
-                                    placeholder="nom@exemple.com"
-                                />
-                                {fieldErrors.email && (
-                                    <div className="flex items-center gap-2 p-2 mt-2 dark:text-red-400 text-red-600 bg-transparent transition-opacity duration-300 text-sm">
-                                        <CircleAlert className="w-5 h-5" />
-                                        <span>{fieldErrors.email[0]}</span>
-                                    </div>
-                                )}
+                            <ImageInput
+                                name="email"
+                                label="Adresse e‑mail"
+                                placeholder="nom@exemple.com"
+                                type="email"
+                                Icon={Mail}
+                                errors={fieldErrors.email}
+                            />
+                        </div>
+
+                        {/* ─────── password ─────── */}
+                        <div className="w-full relative">
+                            <ImageInput
+                                name="password"
+                                label="Mot de passe"
+                                placeholder="••••••••"
+                                type="password"
+                                Icon={KeyRound}
+                                errors={fieldErrors.password}
+                            />
+                            {/* forgot password link */}
+                            <div className="flex justify-end w-full pr-2">
+                                <Link
+                                    href="/forgot-password"
+                                    className="text-sm p-1 text-violet-400 dark:text-violet-300 hover:text-violet-500"
+                                >
+                                    Mot de passe oublié ?
+                                </Link>
                             </div>
                         </div>
 
-                        {/* Password */}
-                        <div className="w-full">
-                            <label htmlFor="password" className="block mb-2 text-sm font-medium text-violet-600 dark:text-violet-400">
-                                Mot de passe
-                            </label>
-                            <div className="relative mb-6">
-                                <div className="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
-                                    <KeyRound className="w-4 h-4 text-gray-500 dark:text-gray-400" />
-                                </div>
-                                <input
-                                    type="password"
-                                    id="password"
-                                    className={`outline-none bg-gray-50 border-2 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-violet-500 dark:focus:border-violet-500 ${
-                                        fieldErrors.password ? "dark:!border-red-400 !border-red-600" : ""
-                                    }`}
-                                    placeholder="********"
-                                />
-                                <div className="flex justify-end absolute w-full">
-                                    <Link href="/forgot-password" className="text-sm p-1 text-violet-400 dark:text-violet-300 hover:text-violet-500">
-                                        Mot de passe oublié ?
-                                    </Link>
-                                </div>
-                                {fieldErrors.password && (
-                                    <div className="flex items-center gap-2 p-2 mt-2 dark:text-red-400 text-red-600 bg-transparent transition-opacity duration-300 text-sm">
-                                        <CircleAlert className="w-5 h-5" />
-                                        <span>{fieldErrors.password[0]}</span>
-                                    </div>
-                                )}
-                            </div>
-                        </div>
-
-                        {/* Submit */}
+                        {/* ─────── submit ─────── */}
                         <button
                             type="submit"
                             disabled={isSubmitting}
@@ -150,7 +126,6 @@ export default function LoginPage() {
                         >
                             {isSubmitting ? "Connexion..." : "Se connecter"}
                         </button>
-
                     </form>
 
                     <p className="text-sm text-center p-6">
@@ -178,7 +153,6 @@ export default function LoginPage() {
                     </p>
                 </div>
             </div>
-
         </div>
     );
 }

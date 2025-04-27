@@ -42,4 +42,13 @@ class Conference extends Model
             'user_id'
         )->withPivot('role', 'role_status')->withTimestamps();
     }
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($conference) {
+            $conference->slug = $conference->slug ?? str($conference->title)->slug('-') . '-' . substr(uniqid(), -6);
+        });
+    }
+
 }
