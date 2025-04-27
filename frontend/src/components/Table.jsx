@@ -51,7 +51,7 @@ const Table = ({ columns, data }) => {
                                         {col === "Actions" ? (
                                             <div className="flex gap-3">
                                                 <button
-                                                    onClick={() => router.push(`/conference/${row.id}`)}
+                                                    onClick={() => router.push(`/conference/${row.slug}`)}
                                                     className="text-blue-500 hover:text-blue-700"
                                                 >
                                                     <Eye size={20} />

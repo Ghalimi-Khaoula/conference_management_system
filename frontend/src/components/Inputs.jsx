@@ -4,12 +4,12 @@ import { useState } from "react";
 export function NormalInput({ label, name, errors, placeholder, type = "text" }) {
     return (
         <div>
-            <label
+            {label && <label
                 htmlFor={name}
                 className="block mb-2 text-sm font-medium text-violet-600 dark:text-violet-400"
             >
                 {label}
-            </label>
+            </label>}
             <input
                 type={type}
                 id={name}
@@ -31,12 +31,12 @@ export function NormalInput({ label, name, errors, placeholder, type = "text" })
 export function ImageInput({ label, name, errors, placeholder, type = "text", Icon }) {
     return (
         <div>
-            <label
+            {label && <label
                 htmlFor={name}
                 className="block mb-2 text-sm font-medium text-violet-600 dark:text-violet-400"
             >
                 {label}
-            </label>
+            </label>}
             <div className="relative">
                 <div className="relative">
                     <div className="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
@@ -68,12 +68,12 @@ export function SelectInput({ label, name, list, data }) {
 
     return (
         <div>
-            <label
+            {label && <label
                 htmlFor={name}
                 className="block mb-2 text-sm font-medium text-violet-600 dark:text-violet-400"
             >
                 {label}
-            </label>
+            </label>}
 
             <div className="relative">
                 <button
@@ -120,12 +120,12 @@ export function PhoneInput({ label,name, errors,placeholder,data,list }) {
     const [codeOpen, setCodeOpen] = useState(false);
     return (
         <div>
-            <label
+            {label && <label
                 htmlFor={name}
                 className="block mb-2 text-sm font-medium text-violet-600 dark:text-violet-400"
             >
                 {label}
-            </label>
+            </label>}
 
             <div className="relative">
                 <div className="relative flex">

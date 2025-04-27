@@ -33,7 +33,8 @@ const MyConferencePage = () => {
                 const conferences = response.data.data;
 
                 const formatted = conferences.map(conf => ({
-                    id: conf.id, // Needed for Show Details
+                    id: conf.id,
+                    slug: conf.slug,
                     title: conf.title,
                     visibility: conf.visibility,
                     status: conf.status,
