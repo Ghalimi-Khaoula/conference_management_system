@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation"; // 🛠️ Needed to detect current page
-import { LayoutDashboard, User, CalendarDays, Settings, Send } from "lucide-react"; // Icons!
+import { LayoutDashboard, User, CalendarDays, Settings, Send,Crown } from "lucide-react"; // Icons!
+import { useEffect, useState } from "react";
 
 const menuItems = [
     {
@@ -42,8 +43,55 @@ const menuItems = [
     },
 ];
 
-const Menu = () => {
-    const pathname = usePathname(); // 📍 get current URL path
+const Menu = ({user}) => {
+    const pathname = usePathname();
+    const roles = user?.roles || [];
+
+    const [menuItems, setMenuItems] = useState([
+        {
+            title: "MENU",
+            items: [
+                { icon: LayoutDashboard, label: "Tableau De Bord", href: "/dashboard" },
+                { icon: CalendarDays, label: "Conférences", href: "/my-conferences" },
+                { icon: Send, label: "Soumissions", href: "/my-submissions" },
+            ],
+        },
+        {
+            title: "AUTRES",
+            items: [
+                { icon: User, label: "Profil", href: "/profil" },
+                { icon: Settings, label: "Paramètres", href: "/settings" },
+            ],
+        },
+    ]);
+
+    // 🛠️ If the user is admin, inject Admin Option into "AUTRES"
+    useEffect(() => {
+        if (roles.includes('admin')) {
+            setMenuItems((prevItems) => {
+                // Clone the array to not mutate directly
+                const newItems = [...prevItems];
+                
+                // Find "AUTRES" section
+                const autresSection = newItems.find(section => section.title === "AUTRES");
+                
+                if (autresSection) {
+                    // Only add if it doesn't exist already
+                    const alreadyExists = autresSection.items.some(item => item.href === "/admin");
+                    
+                    if (!alreadyExists) {
+                        autresSection.items.push({
+                            icon: Crown,
+                            label: "Options Admin",
+                            href: "/admin",
+                        });
+                    }
+                }
+
+                return newItems;
+            });
+        }
+    }, [roles]);
 
     return (
         <div className="flex flex-col items-center lg:items-start lg:px-4 py-4 text-sm">

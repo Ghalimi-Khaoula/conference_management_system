@@ -273,7 +273,7 @@ export default function RegisterPage() {
                         {/* ─────── country code + phone ─────── */}
                         <div className="flex-1 mb-6">
                             <PhoneInput
-                                name="phone"
+                                name="numero"
                                 label="Numéro de téléphone"
                                 list={PhoneData}
                                 data={{ getter: countryCode, setter: setCountryCode }}

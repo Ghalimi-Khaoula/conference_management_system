@@ -2,7 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Submission;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Request;
 
 class SubmissionRequest extends FormRequest
 {
@@ -24,4 +27,32 @@ class SubmissionRequest extends FormRequest
             'file' => 'required|file|mimes:pdf,doc,docx', // adjust accepted file types
         ];
     }
+    /**
+     * Get the user's submission for a specific conference.
+     */
+    public function getUserSubmission(Request $request)
+    {
+        $conferenceUserId = $request->query('conference_user_id');
+
+        $submission = Submission::where('conference_user_id', $conferenceUserId)
+            ->whereHas('conferenceUser', function ($query) {
+                $query->where('user_id', Auth::id());
+            })
+            ->first();
+
+        if (!$submission) {
+            return response()->json(null); // No submission yet
+        }
+
+        return response()->json([
+            'id' => $submission->id,
+            'title' => $submission->title,
+            'abstract' => $submission->abstract,
+            'keywords' => explode("\n", $submission->keywords),
+            'authors' => explode("\n", $submission->authors),
+            'file_name' => $submission->file_name,
+            'status' => $submission->status,
+        ]);
+    }
+
 }
